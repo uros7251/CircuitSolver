@@ -1,7 +1,7 @@
 # CircuitSolver
 Unique, object-oriented, linear electric circuit solver.
 ## Brief description
-*CircuitSolver* allows you to programmaticaly solve linear circuits which consists of multiple components connected in series and parallel. Bridge topologies are unfortunately not supported. Component stands for either any primitive linear two-terminal element including:
+*CircuitSolver* allows you to programmaticaly solve linear circuits which consist of multiple components connected in series and parallel. Bridge topologies are unfortunately not supported. Component stands for any primitive linear two-terminal element including:
 - resistor
 - capacitor
 - inductor
@@ -13,7 +13,7 @@ or parallel and series circuit. In that way, electric circuit is modeled as a tr
 
 Both DC and AC modes are supported.
 ## Passive sign convention
-When creating and connecting active components (that is voltage and current sources), one must follow [passive sign convention](https://en.wikipedia.org/wiki/Passive_sign_convention). This means that, given the reference direction of voltage and current, EMF or current of active components which supply power to the rest of the circuit should be taken with negative sign. In simpler terms, this boils down to following two rules:
+When creating and connecting active components (that is voltage and current sources), one must follow [passive sign convention](https://en.wikipedia.org/wiki/Passive_sign_convention). This means that, given the reference direction of voltage and current, EMF or current of those active components which supply power to the rest of the circuit should be taken with negative sign. This boils down to two simple rules:
 - EMF of an ideal voltage source is taken with negative sign if and only if its positive pole coincides with negative reference pole.
 - Current of an ideal current source is taken with negative sign if and only if its direction is different that reference current direction.
 ## Example
@@ -45,7 +45,7 @@ To simulate the dynamics of the circuit, we essentially impose open-circuit betw
 ``` csharp
 circuit.ApplyCurrent(current: 0, omega: 0);
 
-Console.WriteLine($"Current at {e1.Label}: {e1.Current}A");
+Console.WriteLine($"Current at {e1.Label}: {e1.Current.Real}A");
 ```
 ## How it works
 Unlike many other conventional tools for simulating electric circuits which rely on solving linear systems of equations, *CircuitSolver* exploits polymorphism and hence is completely object-oriented. Each component follows the same interface, but behaves differently.
