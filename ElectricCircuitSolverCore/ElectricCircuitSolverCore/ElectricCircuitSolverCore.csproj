@@ -2,8 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <PackageId>uros7251.CircuitSolver.Core</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Uros Stojkovic</Authors>
+    <Product>Linear electric circuit solver</Product>
+    <Description>
+      This library allows you to programmaticaly solve linear circuits which consist of multiple components connected in series and parallel.
+      Both DC and AC modes are supported.
+      Unlike other tools with similar purpose, CircuitSolver is object-oriented and relies completely on polymorphism.
+      You can find more details at: https://github.com/uros7251/CircuitSolver
+    </Description>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageReadmeFile></PackageReadmeFile>
+    <RepositoryUrl>https://github.com/uros7251/CircuitSolver</RepositoryUrl>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
 </Project>

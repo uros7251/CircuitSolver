@@ -23,6 +23,9 @@ Consider the following circuit:
 
 Say we are interested in the current going through $E_{1}$. First, we instantiate all the elements.
 ``` csharp
+using ElectricCircuitSolverCore.TwoTerminalComponents;
+using ElectricCircuitSolverCore.TwoTerminalComponents.Abstract;
+
 Resistor r1 = new Resistor("R1", 200),
     r2 = new Resistor("R2", 100),
     r3 = new Resistor("R3", 1),
@@ -49,3 +52,6 @@ Console.WriteLine($"Current at {e1.Label}: {e1.Current.Real}A");
 ```
 ## How it works
 Unlike many other conventional tools for simulating electric circuits which rely on solving linear systems of equations, *CircuitSolver* exploits polymorphism and hence is completely object-oriented. Each component follows the same interface, but behaves differently.
+
+## Install NuGet package
+The most convenient way to use the library is by installing [NuGet package](https://www.nuget.org/packages/uros7251.CircuitSolver.Core/1.0.0).
