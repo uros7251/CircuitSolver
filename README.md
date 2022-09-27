@@ -28,13 +28,13 @@ using ElectricCircuitSolverCore.TwoTerminalComponents.Abstract;
 
 Resistor r1 = new Resistor("R1", 200),
     r2 = new Resistor("R2", 100),
-    r3 = new Resistor("R3", 1),
+    r3 = new Resistor("R3", 100),
     r4 = new Resistor("R4", 50),
     r5 = new Resistor("R5", 100);
 
 IdealVoltageSource e1 = new IdealVoltageSource("E1", 1);
-IdealCurrentSource j1 = new IdealCurrentSource("J1", 20, unit: 'm'),
-    j2 = new IdealCurrentSource("J2", 10, unit: 'm');
+IdealCurrentSource j1 = new IdealCurrentSource("J1", 20, unit: Prefix.Mili),
+    j2 = new IdealCurrentSource("J2", 10, unit: Prefix.Mili);
 ```
 Then, we model the circuit as a tree of series and parallel connections going from node 1 to 4. The binary operators & and | are overloaded to represent joining in series and parallel, respectively. Unary operator ~ is overloaded to represent reverse component's orientation. Take a moment to understand why it has been applied to $E_{1}$.
 ``` csharp
