@@ -54,4 +54,4 @@ Console.WriteLine($"Current at {e1.Label}: {e1.Current.Real}A");
 Unlike many other conventional tools for simulating electric circuits which rely on solving linear systems of equations, *CircuitSolver* exploits polymorphism and hence is completely object-oriented. Each component follows the same interface, but behaves differently.
 
 ## Install NuGet package
-The most convenient way to use the library is by installing [NuGet package](https://www.nuget.org/packages/uros7251.CircuitSolver.Core/1.0.0).
+The most convenient way to use the library is by installing [NuGet package](https://www.nuget.org/packages/uros7251.CircuitSolver.Core/1.0.2).
