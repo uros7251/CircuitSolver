@@ -5,52 +5,42 @@ using ElectricCircuitSolverCore.CurrentVoltageCharacteristic;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Abstract;
 using System.Numerics;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
+using ElectricCircuitSolverCore.InternationalSystemOfUnits;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class IdealVoltageSource : TwoTerminalComponent
+	public class IdealVoltageSource : ComplexValuedComponent
 	{
-		#region Attributes
-		private Complex _emf;
-		#endregion
 
 		#region Constructors
-		public IdealVoltageSource(string id, Complex emf, char unit = 'V')
-			: base(id)
+		public IdealVoltageSource(string id, Complex emf, Prefix unit = Prefix.None)
+			: base(id, emf, unit)
 		{
-			_emf = emf;
-			switch (unit)
-			{
-				case 'k':
-					_emf *= 1e3;
-					break;
-				case 'm':
-					_emf /= 1e3;
-					break;
-				default:
-					break;
-			}
 		}
-		public IdealVoltageSource(string id, double magnitude, double phase = 0, char unit = 'V')
-			: this(id, Complex.FromPolarCoordinates(magnitude, phase), unit)
+		public IdealVoltageSource(string id, double magnitude, double phase = 0, Prefix unit = Prefix.None)
+			: base(id, magnitude, phase, unit)
 		{
-
 		}
 		#endregion
 
 		#region Properties
+		private Complex Emf
+		{
+			get { return _value; }
+			set { _value = value; }
+		}
 		public override ComponentType Type => ComponentType.IdealVoltageSource;
 		#endregion
 
 		#region Methods
 		public override LinearCurrentVoltageCharacteristic CalculateCurrentVoltageCharacteristic(double omega)
 		{
-			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(true, Complex.Zero, _emf);
+			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(true, Complex.Zero, Emf);
 		}
 
 		public override TwoTerminalComponent Reverse()
 		{
-			_emf = -_emf;
+			Emf = -Emf;
 			if (_currentVoltageCharacteristic != null)
 				_currentVoltageCharacteristic = ~_currentVoltageCharacteristic;
 			return this;

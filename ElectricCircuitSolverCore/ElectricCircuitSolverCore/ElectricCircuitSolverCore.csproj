@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <PackageId>uros7251.CircuitSolver.Core</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.2-alpha.1</Version>
     <Authors>Uros Stojkovic</Authors>
     <Product>Linear electric circuit solver</Product>
     <Description>

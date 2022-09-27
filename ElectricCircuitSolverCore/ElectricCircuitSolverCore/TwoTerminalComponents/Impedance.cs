@@ -4,45 +4,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
+using ElectricCircuitSolverCore.InternationalSystemOfUnits;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class Impedance : Abstract.TwoTerminalComponent
+	public class Impedance : Abstract.ComplexValuedComponent
 	{
-		#region Attributes
-		private Complex _impedance;
-		#endregion
-
 		#region Constructors
-		public Impedance(string id, Complex impedance, char unit = 'O')
-			: base(id)
+		public Impedance(string id, Complex impedance, Prefix unit = Prefix.None)
+			: base(id, impedance, unit)
 		{
-			_impedance = impedance;
-			switch (unit)
-			{
-				case 'm':
-					_impedance /= 1e3;
-					break;
-				case 'k':
-					_impedance *= 1e3;
-					break;
-				case 'M':
-					_impedance *= 1e6;
-					break;
-				default:
-					break;
-			}
 		}
 		#endregion
 
 		#region Properties
+		private Complex Z => _value;
 		public override ComponentType Type => ComponentType.Impedance;
 		#endregion
 
 		#region Methods
 		public override LinearCurrentVoltageCharacteristic CalculateCurrentVoltageCharacteristic(double omega)
 		{
-			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(true, _impedance, Complex.Zero);
+			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(true, Z, Complex.Zero);
 		}
 		#endregion
 	}

@@ -4,45 +4,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
+using ElectricCircuitSolverCore.InternationalSystemOfUnits;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class Resistor : Abstract.TwoTerminalComponent
+	public class Resistor : Abstract.RealValuedComponent
 	{
-		#region Attributes
-		private double _resistance;
-		#endregion
-
 		#region Constructors
-		public Resistor(string id, double resistance, char unit = 'O')
-			: base(id)
+		public Resistor(string id, double resistance, Prefix unit = Prefix.None)
+			: base(id, resistance, unit)
 		{
-			_resistance = resistance;
-			switch (unit)
-			{
-				case 'm':
-					_resistance /= 1e3;
-					break;
-				case 'k':
-					_resistance *= 1e3;
-					break;
-				case 'M':
-					_resistance *= 1e6;
-					break;
-				default:
-					break;
-			}
 		}
 		#endregion
 
 		#region Properties
-		public override ComponentType Type => ComponentType.Capacitor;
+		private double Resistance => _value;
+		public override ComponentType Type => ComponentType.Resistor;
 		#endregion
 
 		#region Methods
 		public override LinearCurrentVoltageCharacteristic CalculateCurrentVoltageCharacteristic(double omega)
 		{
-			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(true, new Complex(-_resistance, 0), Complex.Zero);
+			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(true, new Complex(-Resistance, 0), Complex.Zero);
 		}
 		#endregion
 	}

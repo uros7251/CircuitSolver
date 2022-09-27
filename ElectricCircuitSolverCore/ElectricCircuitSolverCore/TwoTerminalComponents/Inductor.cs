@@ -4,38 +4,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Numerics;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
+using ElectricCircuitSolverCore.InternationalSystemOfUnits;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class Inductor : TwoTerminalComponents.Abstract.TwoTerminalComponent
+	public class Inductor : TwoTerminalComponents.Abstract.RealValuedComponent
 	{
-		#region Attributes
-		private double _inductance;
-		#endregion
-
 		#region Constructor
-		public Inductor(string id, double inductance, char unit = 'm')
-			: base(id)
+		public Inductor(string id, double inductance, Prefix unit = Prefix.None)
+			: base(id, inductance * SCALE, unit) // inductance is expressed in milihenries by default
 		{
-			_inductance = inductance;
-			switch (unit)
-			{
-				case 'H':
-					_inductance *= 1e3;
-					break;
-				case 'u':
-					_inductance /= 1e3;
-					break;
-				case 'p':
-					_inductance /= 1e6;
-					break;
-				default:
-					break;
-			}
 		}
 		#endregion
 
 		#region Properties
+		private double Inductance => _value;
 		public override ComponentType Type => ComponentType.Inductor;
 		#endregion
 
@@ -44,7 +27,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 		{
 			return omega == 0 ?
 				LinearCurrentVoltageCharacteristic.ShortCircuit() :
-				new LinearCurrentVoltageCharacteristic(true, new Complex(0, - omega * _inductance / SCALE), Complex.Zero);
+				new LinearCurrentVoltageCharacteristic(true, new Complex(0, - omega * Inductance / SCALE), Complex.Zero);
 		}
 		#endregion
 

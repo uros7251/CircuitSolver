@@ -5,55 +5,41 @@ using ElectricCircuitSolverCore.CurrentVoltageCharacteristic;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Abstract;
 using System.Numerics;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
+using ElectricCircuitSolverCore.InternationalSystemOfUnits;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class IdealCurrentSource : TwoTerminalComponent
+	public class IdealCurrentSource : ComplexValuedComponent
 	{
-		#region Attributes
-		private Complex _amperage;
-		#endregion
-
 		#region Constructors
-		public IdealCurrentSource(string id, Complex amperage, char unit = 'A')
-			: base(id)
+		public IdealCurrentSource(string id, Complex amperage, Prefix unit = Prefix.None)
+			: base(id, amperage, unit)
 		{
-			_amperage = amperage;
-			switch (unit)
-			{
-				case 'm':
-					_amperage /= 1e3;
-					break;
-				case 'u':
-					_amperage /= 1e6;
-					break;
-				case 'n':
-					_amperage /= 1e9;
-					break;
-				default:
-					break;
-			}
 		}
-		public IdealCurrentSource(string id, double magnitude, double phase, char unit = 'A')
-			: this(id, Complex.FromPolarCoordinates(magnitude, phase), unit)
+		public IdealCurrentSource(string id, double magnitude, double phase, Prefix unit = Prefix.None)
+			: base(id, magnitude, phase, unit)
 		{
-
 		}
 		#endregion
 
 		#region Properties
+		private Complex Amperage
+		{
+			get { return _value; }
+			set { _value = value; }
+		}
 		public override ComponentType Type => ComponentType.IdealCurrentSource;
 		#endregion
 
 		#region Methods
 		public override LinearCurrentVoltageCharacteristic CalculateCurrentVoltageCharacteristic(double omega)
 		{
-			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(false, Complex.One, _amperage);
+			return _currentVoltageCharacteristic ?? new LinearCurrentVoltageCharacteristic(false, Complex.One, Amperage);
 		}
 
 		public override TwoTerminalComponent Reverse()
 		{
-			_amperage = -_amperage;
+			Amperage = -Amperage;
 			if (_currentVoltageCharacteristic != null)
 				_currentVoltageCharacteristic = ~_currentVoltageCharacteristic;
 			return this;

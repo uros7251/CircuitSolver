@@ -8,33 +8,26 @@ using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class Series : TwoTerminalComponent
+	public class Series : CompositeComponent
 	{
 		#region Attributes
-		private TwoTerminalComponent _fixedCurrentComponent;
-		private List<TwoTerminalComponent> _components;
+		private TwoTerminalComponent? _fixedCurrentComponent;
 		#endregion
 
 		#region Properties
-		public IReadOnlyCollection<TwoTerminalComponent> Components
-		{
-			get => _components.AsReadOnly();
-		}
-
 		public override ComponentType Type => ComponentType.Series;
 		#endregion
 
 		#region Constructor
-		public Series(string id = null)
+		public Series(string? id = null)
 			: base(id)
 		{
 			_fixedCurrentComponent = null;
-			_components = new List<TwoTerminalComponent>();
 		}
 		#endregion
 
 		#region Methods
-		public Series Add(TwoTerminalComponent component)
+		public override CompositeComponent Add(TwoTerminalComponent component)
 		{
 			if (component.Type == ComponentType.IdealCurrentSource)
 			{
@@ -47,7 +40,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 				_components.Add(component);
 			return this;
 		}
-		public bool Remove(TwoTerminalComponent component)
+		public override bool Remove(TwoTerminalComponent component)
 		{
 			if (component == _fixedCurrentComponent)
 			{

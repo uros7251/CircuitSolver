@@ -10,13 +10,13 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents.Abstract
 	public abstract class TwoTerminalComponent : ITwoTerminalComponent
 	{
 		#region Attributes
-		protected LinearCurrentVoltageCharacteristic _currentVoltageCharacteristic;
+		protected LinearCurrentVoltageCharacteristic? _currentVoltageCharacteristic;
 		protected CurrentVoltageState _state;
 		protected double _omega;
 		#endregion
 
 		#region Properties
-		public string Label { get; set; }
+		public string? Label { get; set; }
 		public CurrentVoltageState State { get => _state; }
 		public Complex Current { get => _state.Current; }
 		public Complex Voltage { get => _state.Voltage; }
@@ -25,7 +25,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents.Abstract
 		#endregion
 
 		#region Constructors
-		public TwoTerminalComponent(string label)
+		public TwoTerminalComponent(string? label)
 		{
 			Label = label;
 			_omega = -1;

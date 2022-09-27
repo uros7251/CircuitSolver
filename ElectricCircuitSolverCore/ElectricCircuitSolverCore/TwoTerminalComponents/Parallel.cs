@@ -8,34 +8,28 @@ using System.Numerics;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents
 {
-	public class Parallel : TwoTerminalComponent
+	public class Parallel : CompositeComponent
 	{
 
 		#region Attributes
-		private TwoTerminalComponent _fixedVoltageComponent;
-		private List<TwoTerminalComponent> _components;
+		private TwoTerminalComponent? _fixedVoltageComponent;
 		#endregion
 
 		#region Properties
-		public IReadOnlyCollection<TwoTerminalComponent> Components
-		{
-			get => _components.AsReadOnly();
-		}
 		public override ComponentType Type => ComponentType.Parallel;
 
 		#endregion
 
 		#region Constructor
-		public Parallel(string id = null)
+		public Parallel(string? id = null)
 			: base(id)
 		{
 			_fixedVoltageComponent = null;
-			_components = new List<TwoTerminalComponent>();
 		}
 		#endregion
 
 		#region Methods
-		public Parallel Add(TwoTerminalComponent component)
+		public override CompositeComponent Add(TwoTerminalComponent component)
 		{
 			if (component.CurrentVoltageCharacteristic().HasFixedVoltage)
 			{
@@ -48,7 +42,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 				_components.Add(component);
 			return this;
 		}
-		public bool Remove(TwoTerminalComponent component)
+		public override bool Remove(TwoTerminalComponent component)
 		{
 			if (component == _fixedVoltageComponent)
 			{
