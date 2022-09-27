@@ -12,7 +12,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 	{
 
 		#region Attributes
-		private TwoTerminalComponent _fixedVoltageComponent;
+		private TwoTerminalComponent? _fixedVoltageComponent;
 		private List<TwoTerminalComponent> _components;
 		#endregion
 
@@ -26,8 +26,8 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 		#endregion
 
 		#region Constructor
-		public Parallel(string id = null)
-			: base(id)
+		public Parallel(string? label = null)
+			: base(label)
 		{
 			_fixedVoltageComponent = null;
 			_components = new List<TwoTerminalComponent>();

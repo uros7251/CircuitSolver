@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using ElectricCircuitSolverCore.CurrentVoltageCharacteristic;
+using ElectricCircuitSolverCore.InternationalSystemOfUnits;
 using ElectricCircuitSolverCore.TwoTerminalComponents.Interface;
 
 namespace ElectricCircuitSolverCore.TwoTerminalComponents.Abstract
@@ -10,25 +11,35 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents.Abstract
 	public abstract class TwoTerminalComponent : ITwoTerminalComponent
 	{
 		#region Attributes
-		protected LinearCurrentVoltageCharacteristic _currentVoltageCharacteristic;
+		protected LinearCurrentVoltageCharacteristic? _currentVoltageCharacteristic;
 		protected CurrentVoltageState _state;
 		protected double _omega;
+		protected Complex _value;
 		#endregion
 
 		#region Properties
-		public string Label { get; set; }
+		public string? Label { get; set; }
 		public CurrentVoltageState State { get => _state; }
 		public Complex Current { get => _state.Current; }
 		public Complex Voltage { get => _state.Voltage; }
 		public Complex Power { get => _state.Current * _state.Voltage; }
 		public abstract ComponentType Type { get; }
+		public Complex Value { get; set; }
 		#endregion
 
 		#region Constructors
-		public TwoTerminalComponent(string label)
+		public TwoTerminalComponent(string? label)
 		{
 			Label = label;
 			_omega = -1;
+		}
+		public TwoTerminalComponent(string? label, Complex value, Prefix prefix = Prefix.None) : this(label)
+		{
+			Value = value * Prefixes.GetPrefixValue(prefix);
+		}
+		public TwoTerminalComponent(string? label, Complex value , char prefix)
+		{
+			Value = value * Prefixes.GetPrefixValue(prefix);
 		}
 		#endregion
 
@@ -38,7 +49,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents.Abstract
 			if (_currentVoltageCharacteristic == null || _omega != omega)
 			{
 				_omega = omega;
-				_currentVoltageCharacteristic =  CalculateCurrentVoltageCharacteristic(omega);
+				_currentVoltageCharacteristic = CalculateCurrentVoltageCharacteristic(omega);
 			}
 			return _currentVoltageCharacteristic;
 		}

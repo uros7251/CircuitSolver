@@ -11,7 +11,7 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 	public class Series : TwoTerminalComponent
 	{
 		#region Attributes
-		private TwoTerminalComponent _fixedCurrentComponent;
+		private TwoTerminalComponent? _fixedCurrentComponent;
 		private List<TwoTerminalComponent> _components;
 		#endregion
 
@@ -25,8 +25,8 @@ namespace ElectricCircuitSolverCore.TwoTerminalComponents
 		#endregion
 
 		#region Constructor
-		public Series(string id = null)
-			: base(id)
+		public Series(string? label = null)
+			: base(label)
 		{
 			_fixedCurrentComponent = null;
 			_components = new List<TwoTerminalComponent>();
